@@ -30,8 +30,8 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation project(':spring-boot-starter:line-fido2-spring-boot-starter')
 
-    compileOnly 'org.projectlombok:lombok:1.18.18'
-    annotationProcessor 'org.projectlombok:lombok:1.18.18'
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
 
     //logging
     implementation('org.zalando:logbook-spring-boot-starter:1.8.1')
