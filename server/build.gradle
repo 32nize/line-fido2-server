@@ -118,8 +118,8 @@ dependencies {
     implementation('com.squareup.retrofit2:retrofit:2.4.0')
     implementation('com.squareup.retrofit2:converter-jackson:2.4.0')
 
-    compileOnly 'org.projectlombok:lombok:1.18.2'
-    annotationProcessor 'org.projectlombok:lombok:1.18.18'
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
 
     implementation project(':common')
 //    implementation('com.linecorp.line.auth.fido.fido2:common:1.1.1-SNAPSHOT')
