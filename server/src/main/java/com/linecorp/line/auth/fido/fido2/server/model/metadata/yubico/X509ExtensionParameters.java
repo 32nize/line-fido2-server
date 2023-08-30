@@ -18,9 +18,11 @@ package com.linecorp.line.auth.fido.fido2.server.model.metadata.yubico;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
 public class X509ExtensionParameters extends Parameters {

@@ -18,10 +18,12 @@ package com.linecorp.line.auth.fido.fido2.server.attestation.apple;
 
 import com.linecorp.line.auth.fido.fido2.server.model.AttestationStatement;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class AppleAnonymousAttestationStatement extends AttestationStatement {
     List<byte[]> x5c;
 }

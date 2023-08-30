@@ -19,7 +19,9 @@ package com.linecorp.line.auth.fido.fido2.server.attestation.none;
 import com.linecorp.line.auth.fido.fido2.server.model.AttestationStatement;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class NoneAttestationStatementFormat extends AttestationStatement {
 }

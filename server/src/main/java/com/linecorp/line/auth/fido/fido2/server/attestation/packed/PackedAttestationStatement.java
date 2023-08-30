@@ -18,10 +18,12 @@ package com.linecorp.line.auth.fido.fido2.server.attestation.packed;
 
 import com.linecorp.line.auth.fido.fido2.server.model.AttestationStatement;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class PackedAttestationStatement extends AttestationStatement {
     private int alg;
     private byte[] sig;
