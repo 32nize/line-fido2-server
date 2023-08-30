@@ -36,9 +36,6 @@ import com.linecorp.line.auth.fido.fido2.server.error.InternalErrorCode;
 import com.linecorp.line.auth.fido.fido2.server.model.UserKey;
 import com.linecorp.line.auth.fido.fido2.server.service.UserKeyService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @RestController
 public class CredentialController {
     private final UserKeyService userKeyService;

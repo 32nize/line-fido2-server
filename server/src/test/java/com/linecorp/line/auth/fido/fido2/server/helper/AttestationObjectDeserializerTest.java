@@ -46,6 +46,7 @@ public class AttestationObjectDeserializerTest {
         CBORFactory cborFactory = new CBORFactory();
         ObjectMapper objectMapper = new ObjectMapper(cborFactory);
 
+        @SuppressWarnings("unused")
         AttestationObject attestationObject = objectMapper.readValue(cborEncodedBytes, AttestationObject.class);
     }
 
@@ -58,6 +59,7 @@ public class AttestationObjectDeserializerTest {
         CBORFactory cborFactory = new CBORFactory();
         ObjectMapper objectMapper = new ObjectMapper(cborFactory);
 
+        @SuppressWarnings("unused")
         AttestationObject attestationObject = objectMapper.readValue(cborEncodedBytes, AttestationObject.class);
     }
 
@@ -70,6 +72,7 @@ public class AttestationObjectDeserializerTest {
         CBORFactory cborFactory = new CBORFactory();
         ObjectMapper objectMapper = new ObjectMapper(cborFactory);
 
+        @SuppressWarnings("unused")
         AttestationObject attestationObject = objectMapper.readValue(cborEncodedBytes, AttestationObject.class);
     }
 
@@ -82,6 +85,7 @@ public class AttestationObjectDeserializerTest {
         CBORFactory cborFactory = new CBORFactory();
         ObjectMapper objectMapper = new ObjectMapper(cborFactory);
 
+        @SuppressWarnings("unused")
         AttestationObject attestationObject = objectMapper.readValue(cborEncodedBytes, AttestationObject.class);
     }
 

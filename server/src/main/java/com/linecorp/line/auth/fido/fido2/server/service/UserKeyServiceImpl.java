@@ -27,7 +27,6 @@ import com.linecorp.line.auth.fido.fido2.server.exception.FIDO2ServerRuntimeExce
 import com.linecorp.line.auth.fido.fido2.server.model.UserKey;
 import com.linecorp.line.auth.fido.fido2.server.repository.RpRepository;
 import com.linecorp.line.auth.fido.fido2.server.repository.UserKeyRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +38,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.*;
 
-@Slf4j
 @Service
 public class UserKeyServiceImpl implements UserKeyService {
     private final UserKeyRepository userKeyRepository;

@@ -26,8 +26,6 @@ import com.linecorp.line.auth.fido.fido2.common.extension.AuthenticationExtensio
 import lombok.*;
 
 import java.util.List;
-import java.util.Map;
-
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @Data
