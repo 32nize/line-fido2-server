@@ -20,8 +20,9 @@ plugins {
 
 group 'com.linecorp.line.auth.fido.fido2'
 version '1.1.1-SNAPSHOT'
-
-sourceCompatibility = 1.8
+// java {
+//     sourceCompatibility = JavaVersion.VERSION_1_8
+// }
 
 repositories {
     mavenCentral()
@@ -32,9 +33,9 @@ test {
 }
 
 dependencies {
-    implementation('com.fasterxml.jackson.core:jackson-databind:2.9.6')
-    implementation('com.fasterxml.jackson.core:jackson-core:2.9.6')
-    implementation('com.fasterxml.jackson.core:jackson-annotations:2.9.6')
+    implementation('com.fasterxml.jackson.core:jackson-databind:2.15.2')
+    implementation('com.fasterxml.jackson.core:jackson-core:2.15.2')
+    implementation('com.fasterxml.jackson.core:jackson-annotations:2.15.2')
     // The spring-boot-starter-validation on server module and the version it depends on must match
     implementation('org.hibernate.validator:hibernate-validator:6.2.0.Final')
     compileOnly 'org.projectlombok:lombok:1.18.28'
