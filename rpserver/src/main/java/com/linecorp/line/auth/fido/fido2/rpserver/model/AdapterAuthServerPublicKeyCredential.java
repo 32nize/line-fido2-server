@@ -21,8 +21,10 @@ import com.linecorp.line.auth.fido.fido2.common.extension.AuthenticationExtensio
 import com.linecorp.line.auth.fido.fido2.common.server.ServerAuthenticatorAssertionResponse;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class AdapterAuthServerPublicKeyCredential extends Credential {
     private String rawId;
     private ServerAuthenticatorAssertionResponse response;

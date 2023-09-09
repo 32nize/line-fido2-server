@@ -42,9 +42,6 @@ import com.linecorp.line.auth.fido.fido2.common.server.AttestationType;
 import com.linecorp.line.auth.fido.fido2.server.model.AuthenticatorData;
 import com.linecorp.line.auth.fido.fido2.server.model.ECCKey;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Component
 public class FidoU2fAttestationVerifier implements AttestationVerifier {
     final byte[] U2F_STATIC_AAGUID = new byte[16];

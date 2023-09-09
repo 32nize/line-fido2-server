@@ -31,9 +31,6 @@ import com.linecorp.line.auth.fido.fido2.server.model.Session;
 import com.linecorp.line.auth.fido.fido2.server.repository.SessionRepository;
 import com.linecorp.line.auth.fido.fido2.server.util.HmacUtil;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 public class SessionServiceImpl implements SessionService {
     private final SessionRepository sessionRepository;

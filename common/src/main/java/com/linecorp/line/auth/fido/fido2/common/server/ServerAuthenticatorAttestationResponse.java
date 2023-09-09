@@ -23,8 +23,10 @@ import javax.validation.constraints.NotBlank;
 import com.linecorp.line.auth.fido.fido2.common.AuthenticatorTransport;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class ServerAuthenticatorAttestationResponse extends ServerAuthenticatorResponse {
     @NotBlank
     @Base64Encoded

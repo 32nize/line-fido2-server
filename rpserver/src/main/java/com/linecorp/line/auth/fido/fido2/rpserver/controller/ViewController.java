@@ -18,12 +18,8 @@ package com.linecorp.line.auth.fido.fido2.rpserver.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 public class ViewController {
     @Value("${conformance.url}")

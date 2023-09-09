@@ -19,8 +19,10 @@ package com.linecorp.line.auth.fido.fido2.server.attestation.android.safetynet;
 import com.linecorp.line.auth.fido.fido2.server.model.AttestationStatement;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class AndroidSafetyNetAttestationStatement extends AttestationStatement {
     private String ver;
     private byte[] response;

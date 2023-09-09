@@ -52,9 +52,6 @@ import com.linecorp.line.auth.fido.fido2.server.model.AttestationStatementFormat
 import com.linecorp.line.auth.fido.fido2.common.server.AttestationType;
 import com.linecorp.line.auth.fido.fido2.server.model.AuthenticatorData;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Component
 public class AndroidKeyAttestationVerifier implements AttestationVerifier {
     private static final String KEY_DESCRIPTION_OID = "1.3.6.1.4.1.11129.2.1.17";
