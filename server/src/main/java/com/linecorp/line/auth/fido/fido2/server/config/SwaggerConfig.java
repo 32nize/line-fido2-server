@@ -16,41 +16,32 @@
 
 package com.linecorp.line.auth.fido.fido2.server.config;
 
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.google.common.base.Predicates;
-
 import org.springframework.context.annotation.Profile;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+
 
 @Configuration
-@EnableSwagger2
 @Profile("!prod")
 public class SwaggerConfig {
     @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.linecorp.line.auth.fido.fido2.server.controller"))
-                .paths(Predicates.not(PathSelectors.regex("/")))
-                .build()
-                .apiInfo(metaData());
+    public GroupedOpenApi api() {
+        return GroupedOpenApi.builder()
+                .group("FIDO2 SERVER REST API")
+                .pathsToMatch("/**")
+                .build();
     }
 
-    private ApiInfo metaData() {
-        return new ApiInfoBuilder()
+    @Bean
+    public Info metaData() {
+        return new Info()
                 .title("FIDO2 SERVER REST API")
                 .description("If you want to know the details of the WebAuthn standard, you can also refer to the official documentation. \n\n https://www.w3.org/TR/webauthn-2/" )
                 .version("1.0.0")
-                .contact(new Contact("Kyung-Joon Park", null, "kyungjoon.park@linecorp.com"))
-                .build();
+                .contact(new Contact().name("Kyung-Joon Park").email("kyungjoon.park@linecorp.com"));
     }
 }
