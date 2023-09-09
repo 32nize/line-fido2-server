@@ -19,7 +19,4 @@ rootProject.name = 'fido2'
 include 'server'
 include 'rpserver'
 include 'common'
-include 'spring-boot-starter:line-fido2-spring-boot-autoconfigure'
-include 'spring-boot-starter:line-fido2-spring-boot-starter'
-include 'spring-boot-starter:line-fido2-spring-boot-demo'
 
