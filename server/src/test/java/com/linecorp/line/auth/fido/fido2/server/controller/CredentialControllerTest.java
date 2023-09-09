@@ -47,7 +47,7 @@ class CredentialControllerTest extends TestSupportForSpringRestDocs {
                 .andExpect(jsonPath("$.serverResponse.internalError", is("SUCCESS")))
                 .andExpect(status().isOk())
                 .andDo(restDocs.document(
-                        requestParameters(
+                        queryParameters(
                                 parameterWithName("rpId").description("RP Id")
                         ),
                         pathParameters(
@@ -68,7 +68,7 @@ class CredentialControllerTest extends TestSupportForSpringRestDocs {
                 .andExpect(jsonPath("$.credentials[0].credentialId", is(userKeyEntity.getCredentialId())))
                 .andExpect(jsonPath("$.serverResponse.internalError", is("SUCCESS")))
                 .andExpect(status().isOk())
-                .andDo(restDocs.document(requestParameters(
+                .andDo(restDocs.document(queryParameters(
                         parameterWithName("rpId").description("RP Id"),
                         parameterWithName("userId").description("User Id")
                 )));
@@ -84,7 +84,7 @@ class CredentialControllerTest extends TestSupportForSpringRestDocs {
                         .param("rpId", userKeyEntity.getRpEntity().getId())
                 )
                 .andExpect(status().isOk())
-                .andDo(restDocs.document(requestParameters(
+                .andDo(restDocs.document(queryParameters(
                                 parameterWithName("rpId").description("RP Id")
                         ),
                         pathParameters(
@@ -106,7 +106,7 @@ class CredentialControllerTest extends TestSupportForSpringRestDocs {
                         .param("userId", userKeyEntity.getUserId())
                 )
                 .andExpect(status().isOk())
-                .andDo(restDocs.document(requestParameters(
+                .andDo(restDocs.document(queryParameters(
                         parameterWithName("rpId").description("RP Id"),
                         parameterWithName("userId").description("User Id")
                 )));
