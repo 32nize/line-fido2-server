@@ -16,13 +16,14 @@
 
 package com.linecorp.line.auth.fido.fido2.server.controller;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import com.linecorp.line.auth.fido.fido2.common.server.RegisterCredential;
 import com.linecorp.line.auth.fido.fido2.common.server.RegisterCredentialResult;
 import com.linecorp.line.auth.fido.fido2.common.server.VerifyCredential;
 import com.linecorp.line.auth.fido.fido2.common.server.VerifyCredentialResult;
 import com.linecorp.line.auth.fido.fido2.server.service.ResponseService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

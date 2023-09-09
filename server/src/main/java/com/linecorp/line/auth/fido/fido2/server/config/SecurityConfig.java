@@ -16,7 +16,7 @@
 
 package com.linecorp.line.auth.fido.fido2.server.config;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import org.springframework.context.annotation.Configuration;
 
