@@ -6,7 +6,7 @@ WORKDIR /workspace/app
 COPY . .
 RUN ./gradlew :fido2-core:dockerBuild
 
-FROM openjdk:17-jre-slim
+FROM eclipse-temurin:17-jre
 EXPOSE 8081
 COPY --from=builder /workspace/app/fido2-core/build/libs/fido2-core*.jar fido2-core.jar
 

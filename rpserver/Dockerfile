@@ -6,7 +6,7 @@ WORKDIR /workspace/app
 COPY . .
 RUN ./gradlew :rpserver:dockerBuild
 
-FROM openjdk:17-jre-slim
+FROM eclipse-temurin:17-jre
 EXPOSE 8080
 COPY --from=builder /workspace/app/rpserver/build/libs/rpserver*.jar rpserver.jar
 ENTRYPOINT ["java","-jar","-Dspring.profiles.active=docker","/rpserver.jar"]
