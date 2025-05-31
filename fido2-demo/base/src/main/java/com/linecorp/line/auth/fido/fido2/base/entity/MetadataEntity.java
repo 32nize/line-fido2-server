@@ -16,7 +16,7 @@
 
 package com.linecorp.line.auth.fido.fido2.base.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

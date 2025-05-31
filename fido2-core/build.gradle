@@ -22,28 +22,11 @@ plugins {
 jar.enabled = true
 bootJar.enabled = false
 
-publishing {
-    publications {
-        mavenJar(MavenPublication) {
-            from components.java
-        }
-    }
-
-    repositories {
-        maven {
-            url = project.ext.getMavenPublishUrl()
-
-            if (project.ext.getMavenPublishUsername() != null) {
-                credentials {
-                    username = project.ext.getMavenPublishUsername()
-                    if (project.ext.getMavenPublishPassword() != null) {
-                        password = project.ext.getMavenPublishPassword()
-                    }
-                }
-            }
-        }
-    }
+repositories {
+    mavenCentral()
 }
+
+
 
 dependencies {
     implementation project(':common')
