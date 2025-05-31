@@ -77,8 +77,8 @@ dependencies {
     implementation('com.fasterxml.jackson.dataformat:jackson-dataformat-cbor')
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
 
-    compileOnly 'org.projectlombok:lombok:1.18.18'
-    annotationProcessor 'org.projectlombok:lombok:1.18.18'
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
 
     //local redis
     if (System.getProperty('os.arch').toLowerCase().contains('aarch64')) {

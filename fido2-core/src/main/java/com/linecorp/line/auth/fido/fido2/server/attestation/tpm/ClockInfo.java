@@ -19,8 +19,8 @@ package com.linecorp.line.auth.fido.fido2.server.attestation.tpm;
 import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
+@Builder
 public class ClockInfo {
     private byte[] clock;
     private long resetCount;

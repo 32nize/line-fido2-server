@@ -20,7 +20,6 @@ plugins {
     id 'io.spring.dependency-management'
 }
 
-uploadArchives.enabled = false
 jar.enabled = true
 
 
@@ -54,5 +53,5 @@ dependencies {
 
     implementation project(':common')
     compileOnly('org.springframework.boot:spring-boot-configuration-processor')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }

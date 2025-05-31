@@ -74,6 +74,7 @@ public class UserKeyEntity {
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "userKeyEntity")
+    @Builder.Default
     private List<AuthenticatorTransportEntity> transports = new ArrayList<>();
 
     @Column
