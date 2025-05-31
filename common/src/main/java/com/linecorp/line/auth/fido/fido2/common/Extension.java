@@ -1,7 +1,7 @@
 /*
- * Copyright 2021 LINE Corporation
+ * Copyright 2024 LY Corporation
  *
- * LINE Corporation licenses this file to you under the Apache License,
+ * LY Corporation licenses this file to you under the Apache License,
  * version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at:
  *
@@ -33,7 +33,8 @@ public enum Extension {
     SUPPORTED_EXTENSIONS("exts"),
     USER_VERIFICATION_INDEX("uvi"),
     LOCATION("loc"),
-    BIOMETRIC_AUTHENTICATOR_PERFORMANCE_BOUNDS("biometricPerfBounds");
+    BIOMETRIC_AUTHENTICATOR_PERFORMANCE_BOUNDS("biometricPerfBounds"),
+    PSEUDO_RANDOM_FUNCTION("prf");
 
     @JsonValue
     @Getter

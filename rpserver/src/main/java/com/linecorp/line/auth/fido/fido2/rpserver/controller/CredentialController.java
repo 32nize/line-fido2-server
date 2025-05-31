@@ -1,7 +1,7 @@
 /*
- * Copyright 2021 LINE Corporation
+ * Copyright 2024 LY Corporation
  *
- * LINE Corporation licenses this file to you under the Apache License,
+ * LY Corporation licenses this file to you under the Apache License,
  * version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at:
  *
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import jakarta.annotation.PostConstruct;
+import javax.annotation.PostConstruct;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -81,7 +81,7 @@ public class CredentialController {
             @PathVariable("id") String credentialId) {
 
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(getDeleteCredentialsUri);
-        URI uri = uriComponentsBuilder.path(credentialId)
+        URI uri = uriComponentsBuilder.pathSegment(credentialId)
                                       .queryParam("rpId", rpId)
                                       .build().toUri();
 
@@ -112,7 +112,7 @@ public class CredentialController {
             @PathVariable("id") String credentialId) {
 
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(getDeleteCredentialsUri);
-        URI uri = uriComponentsBuilder.path(credentialId)
+        URI uri = uriComponentsBuilder.pathSegment(credentialId)
                                       .queryParam("rpId", rpId)
                                       .build().toUri();
 

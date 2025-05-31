@@ -1,7 +1,7 @@
 /*
- * Copyright 2021 LINE Corporation
+ * Copyright 2024 LY Corporation
  *
- * LINE Corporation licenses this file to you under the Apache License,
+ * LY Corporation licenses this file to you under the Apache License,
  * version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at:
  *
@@ -20,6 +20,7 @@ package com.linecorp.line.auth.fido.fido2.common.server;
 import javax.validation.constraints.NotBlank;
 
 import com.linecorp.line.auth.fido.fido2.common.UserVerificationRequirement;
+import com.linecorp.line.auth.fido.fido2.common.extension.PRFInputs;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,4 +36,5 @@ public class AuthOptionRequest {
     private String rpId;
     private String userId;
     private UserVerificationRequirement userVerification;
+    private PRFInputs prf;
 }
