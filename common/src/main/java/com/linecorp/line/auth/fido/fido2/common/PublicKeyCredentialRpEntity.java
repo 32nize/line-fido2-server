@@ -17,8 +17,10 @@
 package com.linecorp.line.auth.fido.fido2.common;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class PublicKeyCredentialRpEntity extends PublicKeyCredentialEntity {
     private String id;
 }

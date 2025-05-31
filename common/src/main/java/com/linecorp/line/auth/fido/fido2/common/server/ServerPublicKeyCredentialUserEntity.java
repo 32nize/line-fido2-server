@@ -23,8 +23,10 @@ import org.hibernate.validator.constraints.Length;
 import com.linecorp.line.auth.fido.fido2.common.PublicKeyCredentialEntity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class ServerPublicKeyCredentialUserEntity extends PublicKeyCredentialEntity {
     @NotNull
     @Length(min = 1, max = 64)

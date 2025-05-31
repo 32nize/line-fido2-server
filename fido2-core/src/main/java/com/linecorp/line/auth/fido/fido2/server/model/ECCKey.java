@@ -28,8 +28,10 @@ import com.linecorp.line.auth.fido.fido2.server.cose.COSEKeyType;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Builder
 public class ECCKey extends CredentialPublicKey {
     private COSEAlgorithm algorithm;

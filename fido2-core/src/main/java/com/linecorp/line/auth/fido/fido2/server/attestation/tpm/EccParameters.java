@@ -17,8 +17,10 @@
 package com.linecorp.line.auth.fido.fido2.server.attestation.tpm;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class EccParameters extends Parameters {
     private TpmEccCurve curveId;
     private byte[] kdf;

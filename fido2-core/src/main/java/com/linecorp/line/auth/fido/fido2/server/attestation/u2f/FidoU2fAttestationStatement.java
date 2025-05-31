@@ -21,8 +21,10 @@ import java.util.List;
 import com.linecorp.line.auth.fido.fido2.server.model.AttestationStatement;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class FidoU2fAttestationStatement extends AttestationStatement {
     private List<byte[]> x5c;
     private byte[] sig;

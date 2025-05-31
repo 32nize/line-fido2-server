@@ -23,8 +23,10 @@ import com.linecorp.line.auth.fido.fido2.common.Credential;
 import com.linecorp.line.auth.fido.fido2.common.extension.AuthenticationExtensionsClientOutputs;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class ServerAuthPublicKeyCredential extends Credential {
     @NotNull
     @Valid

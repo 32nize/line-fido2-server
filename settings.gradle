@@ -28,7 +28,6 @@ include 'server'
 include 'fido2-core'
 include 'rpserver'
 include 'common'
-
 include ':demo'
 project(":demo").projectDir = new File('./fido2-demo/demo')
 

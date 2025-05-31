@@ -32,7 +32,6 @@ import com.linecorp.line.auth.fido.fido2.server.model.AttestationStatement;
 import com.linecorp.line.auth.fido.fido2.server.model.AttestationStatementFormatIdentifier;
 import com.linecorp.line.auth.fido.fido2.server.model.AuthenticatorData;
 import com.linecorp.line.auth.fido.fido2.server.util.CertificateUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -48,7 +47,6 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
-@Slf4j
 @Component
 public class AndroidSafetyNetAttestationVerifier implements AttestationVerifier {
     private static final String ALGORITHM_RS256 = "RS256";

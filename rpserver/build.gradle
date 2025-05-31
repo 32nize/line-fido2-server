@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-
 plugins {
     id 'application'
     id 'org.springframework.boot'
@@ -22,6 +21,21 @@ plugins {
 
 jar.enabled = true
 
+group = 'com.linecorp.line.auth.fido.fido2'
+version = '0.0.1-SNAPSHOT'
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
 
 test {
     useJUnitPlatform()
@@ -33,6 +47,7 @@ task dockerBuild() {
     }
     dependsOn(bootJar)
 }
+
 
 dependencies {
     implementation project(':common')
@@ -46,10 +61,11 @@ dependencies {
     //springdoc
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.15'
 
-    implementation('javax.activation:activation:1.1.1')
-    implementation('org.springframework.boot:spring-boot-devtools')
+
+    // implementation('javax.activation:activation:1.1.1')
+    // implementation('org.springframework.boot:spring-boot-devtools')
     compileOnly('org.projectlombok:lombok')
-    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
 
     implementation project(':common')
     compileOnly('org.springframework.boot:spring-boot-configuration-processor')

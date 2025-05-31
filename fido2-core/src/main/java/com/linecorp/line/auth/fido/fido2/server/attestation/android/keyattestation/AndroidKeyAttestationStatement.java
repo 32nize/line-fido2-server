@@ -21,8 +21,10 @@ import java.util.List;
 import com.linecorp.line.auth.fido.fido2.server.model.AttestationStatement;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class AndroidKeyAttestationStatement extends AttestationStatement {
     private int alg;
     private byte[] sig;

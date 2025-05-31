@@ -40,7 +40,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.*;
 
-@Slf4j
 @Service
 public class UserKeyServiceImpl implements UserKeyService {
     private final UserKeyRepository userKeyRepository;

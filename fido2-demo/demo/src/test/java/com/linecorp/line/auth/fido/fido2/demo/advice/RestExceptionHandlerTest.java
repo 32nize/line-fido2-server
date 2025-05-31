@@ -43,6 +43,7 @@ public class RestExceptionHandlerTest {
 
     private static final String FIDO2_SERVER_RUNTIME_EXCEPTION_MSG = "rpId should not be null or empty";
     private static final String RUNTIME_EXCEPTION_MSG = "Unknown Error";
+    @SuppressWarnings("unused")
     private static final String FIDO2_U2F_SERVER_RUNTIME_EXCEPTION_MSG = "Not allowed origin";
     @Autowired
     private RestExceptionHandler exceptionHandler;
