@@ -61,3 +61,10 @@ dependencies {
     implementation("com.github.ben-manes.caffeine:caffeine")
 
 }
+
+tasks.register('dockerBuild') {
+    doFirst {
+        jar.enabled = System.getenv("OPEN_SOURCE_BUILD") != "true"
+    }
+    dependsOn(bootJar)
+}
