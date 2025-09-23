@@ -53,7 +53,7 @@ public class ResponseServiceImpl extends ResponseCommonService implements Respon
     private final SessionService sessionService;
     private final UserKeyService userKeyService;
     private final AttestationService attestationService;
-    private final AppOriginService appOriginService;
+    private final OriginValidationService originValidationService;
 
     @Override
     public RegisterCredentialResult handleAttestation(ServerRegPublicKeyCredential serverPublicKeyCredential, String sessionId,
@@ -67,7 +67,7 @@ public class ResponseServiceImpl extends ResponseCommonService implements Respon
             // handle common part
             log.debug("Handle common part of response");
             byte[] clientDataHsh = handleCommon("webauthn.create", session.getRegOptionResponse().getChallenge(),
-                    attestationResponse.getClientDataJSON(), origin, tokenBinding);
+                    attestationResponse.getClientDataJSON(), origin, rpId, tokenBinding);
 
             AttestationObject attestationObject = attestationService.getAttestationObject(attestationResponse);
             attestationService.attestationObjectValidationCheck(rpId, session.getRegOptionResponse().getAuthenticatorSelection(), attestationObject);
@@ -150,27 +150,8 @@ public class ResponseServiceImpl extends ResponseCommonService implements Respon
     }
 
     @Override
-    protected void checkOrigin(URI originFromClientData, URI originFromRp) {
-        final String ANDROID_FACET_SCHEME = "android";
-        final String IOS_FACET_SCHEME = "ios";
-
-        if (originFromClientData.getScheme().equals(ANDROID_FACET_SCHEME) ||
-                originFromClientData.getScheme().equals(IOS_FACET_SCHEME)) {
-            //app case
-            List<String> appOriginList = appOriginService.getOrigins(originFromRp.toString());
-
-            if (!appOriginList.contains(originFromClientData.toString())) {
-                throw new FIDO2ServerRuntimeException(InternalErrorCode.ORIGIN_NOT_MATCHED,
-                        "Client facet origin: " + originFromClientData + ", App Origin List: " + appOriginList);
-            }
-
-        } else {
-            // web case
-            if (!originFromRp.toString().equals(originFromClientData.toString())) {
-                throw new FIDO2ServerRuntimeException(InternalErrorCode.ORIGIN_NOT_MATCHED,
-                        "From collected data: " + originFromClientData + ", From request param: " + originFromRp);
-            }
-        }
+    protected void checkOrigin(URI originFromClientData, URI originFromRp, String rpId) {
+        originValidationService.validate(originFromClientData, originFromRp, rpId);
     }
 
     @Override
@@ -181,7 +162,7 @@ public class ResponseServiceImpl extends ResponseCommonService implements Respon
             Session session = checkSession(sessionId);
             ServerAuthenticatorAssertionResponse assertionResponse = serverPublicKeyCredential.getResponse();
             handleCommon("webauthn.get", session.getAuthOptionResponse().getChallenge(),
-                    assertionResponse.getClientDataJSON(), origin, tokenBinding);
+                    assertionResponse.getClientDataJSON(), origin, rpId, tokenBinding);
 
             byte[] authDataBytes = Base64.getUrlDecoder().decode(serverPublicKeyCredential.getResponse().getAuthenticatorData());
             AuthenticatorData authData = getAuthData(authDataBytes);
