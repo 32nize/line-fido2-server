@@ -53,35 +53,39 @@ public class ResponseServiceImpl extends ResponseCommonService implements Respon
     private final SessionService sessionService;
     private final UserKeyService userKeyService;
     private final AttestationService attestationService;
-    private final AppOriginService appOriginService;
+    private final OriginValidationService originValidationService;
 
     @Override
     public RegisterCredentialResult handleAttestation(ServerRegPublicKeyCredential serverPublicKeyCredential, String sessionId,
                                                       String origin, String rpId, TokenBinding tokenBinding) {
 
-        // get session and check existence and served
-        Session session = checkSession(sessionId);
-        ServerAuthenticatorAttestationResponse attestationResponse = serverPublicKeyCredential.getResponse();
+        try {
+            // get session and check existence and served
+            Session session = checkSession(sessionId);
+            ServerAuthenticatorAttestationResponse attestationResponse = serverPublicKeyCredential.getResponse();
 
-        // handle common part
-        log.debug("Handle common part of response");
-        byte[] clientDataHsh = handleCommon("webauthn.create", session.getRegOptionResponse().getChallenge(),
-                attestationResponse.getClientDataJSON(), origin, tokenBinding);
+            // handle common part
+            log.debug("Handle common part of response");
+            byte[] clientDataHsh = handleCommon("webauthn.create", session.getRegOptionResponse().getChallenge(),
+                    attestationResponse.getClientDataJSON(), origin, rpId, tokenBinding);
 
-        AttestationObject attestationObject = attestationService.getAttestationObject(attestationResponse);
-        attestationService.attestationObjectValidationCheck(rpId, session.getRegOptionResponse().getAuthenticatorSelection(), attestationObject);
-        AttestationVerificationResult attestationVerificationResult = attestationService.verifyAttestation(clientDataHsh, attestationObject);
+            AttestationObject attestationObject = attestationService.getAttestationObject(attestationResponse);
+            attestationService.attestationObjectValidationCheck(rpId, session.getRegOptionResponse().getAuthenticatorSelection(), attestationObject);
+            AttestationVerificationResult attestationVerificationResult = attestationService.verifyAttestation(clientDataHsh, attestationObject);
 
-        // prepare trust anchors, attestation fmt (from metadata service or trusted source)
-        if (!attestationVerificationResult.isSuccess()) {
-            throw new FIDO2ServerRuntimeException(InternalErrorCode.ATTESTATION_SIGNATURE_VERIFICATION_FAIL);
+            // prepare trust anchors, attestation fmt (from metadata service or trusted source)
+            if (!attestationVerificationResult.isSuccess()) {
+                throw new FIDO2ServerRuntimeException(InternalErrorCode.ATTESTATION_SIGNATURE_VERIFICATION_FAIL);
+            }
+
+            if (attestationVerificationResult.getType() != AttestationType.SELF && attestationVerificationResult.getType() != AttestationType.NONE) {
+                attestationService.verifyAttestationCertificate(attestationObject, attestationVerificationResult);
+            }
+
+            return getRegisterCredentialResult(session.getRegOptionResponse(), attestationResponse.getTransports(), attestationObject.getAuthData(), attestationVerificationResult, serverPublicKeyCredential.getExtensions(), rpId);
+        } finally {
+            sessionService.revokeSession(sessionId);
         }
-
-        if (attestationVerificationResult.getType() != AttestationType.SELF && attestationVerificationResult.getType() != AttestationType.NONE) {
-            attestationService.verifyAttestationCertificate(attestationObject, attestationVerificationResult);
-        }
-
-        return getRegisterCredentialResult(session.getRegOptionResponse(), attestationResponse.getTransports(), attestationObject.getAuthData(), attestationVerificationResult, serverPublicKeyCredential.getExtensions(), rpId);
     }
 
     protected RegisterCredentialResult getRegisterCredentialResult(RegOptionResponse regOptionResponse, List<AuthenticatorTransport> transports, AuthenticatorData authData, AttestationVerificationResult attestationVerificationResult, AuthenticationExtensionsClientOutputs clientExtensions, String rpId) {
@@ -146,51 +150,36 @@ public class ResponseServiceImpl extends ResponseCommonService implements Respon
     }
 
     @Override
-    protected void checkOrigin(URI originFromClientData, URI originFromRp) {
-        final String ANDROID_FACET_SCHEME = "android";
-        final String IOS_FACET_SCHEME = "ios";
-
-        if (originFromClientData.getScheme().equals(ANDROID_FACET_SCHEME) ||
-                originFromClientData.getScheme().equals(IOS_FACET_SCHEME)) {
-            //app case
-            List<String> appOriginList = appOriginService.getOrigins(originFromRp.toString());
-
-            if (!appOriginList.contains(originFromClientData.toString())) {
-                throw new FIDO2ServerRuntimeException(InternalErrorCode.ORIGIN_NOT_MATCHED,
-                        "Client facet origin: " + originFromClientData + ", App Origin List: " + appOriginList);
-            }
-
-        } else {
-            // web case
-            if (!originFromRp.toString().equals(originFromClientData.toString())) {
-                throw new FIDO2ServerRuntimeException(InternalErrorCode.ORIGIN_NOT_MATCHED,
-                        "From collected data: " + originFromClientData + ", From request param: " + originFromRp);
-            }
-        }
+    protected void checkOrigin(URI originFromClientData, URI originFromRp, String rpId) {
+        originValidationService.validate(originFromClientData, originFromRp, rpId);
     }
 
     @Override
     public VerifyCredentialResult handleAssertion(ServerAuthPublicKeyCredential serverPublicKeyCredential, String sessionId,
                                                   String origin, String rpId, TokenBinding tokenBinding) {
 
-        Session session = checkSession(sessionId);
-        ServerAuthenticatorAssertionResponse assertionResponse = serverPublicKeyCredential.getResponse();
-        handleCommon("webauthn.get", session.getAuthOptionResponse().getChallenge(),
-                assertionResponse.getClientDataJSON(), origin, tokenBinding);
+        try {
+            Session session = checkSession(sessionId);
+            ServerAuthenticatorAssertionResponse assertionResponse = serverPublicKeyCredential.getResponse();
+            handleCommon("webauthn.get", session.getAuthOptionResponse().getChallenge(),
+                    assertionResponse.getClientDataJSON(), origin, rpId, tokenBinding);
 
-        byte[] authDataBytes = Base64.getUrlDecoder().decode(serverPublicKeyCredential.getResponse().getAuthenticatorData());
-        AuthenticatorData authData = getAuthData(authDataBytes);
-        checkCredentialId(serverPublicKeyCredential, session);
+            byte[] authDataBytes = Base64.getUrlDecoder().decode(serverPublicKeyCredential.getResponse().getAuthenticatorData());
+            AuthenticatorData authData = getAuthData(authDataBytes);
+            checkCredentialId(serverPublicKeyCredential, session);
 
-        UserKey userKey = getUserKey(serverPublicKeyCredential, rpId);
-        verifyUserHandle(serverPublicKeyCredential, userKey);
-        verifyAuthDataValues(rpId, session, authData,userKey.getAaguid());
-        verifySignature(serverPublicKeyCredential, authDataBytes, userKey);
+            UserKey userKey = getUserKey(serverPublicKeyCredential, rpId);
+            verifyUserHandle(serverPublicKeyCredential, userKey);
+            verifyAuthDataValues(rpId, session, authData, userKey.getAaguid());
+            verifySignature(serverPublicKeyCredential, authDataBytes, userKey);
 
-        checkSignCounter(authData, userKey);
-        // return authentication processing result
-        log.debug("[Finish handling assertion]");
-        return createVerifyCredentialResult(authData, userKey);
+            checkSignCounter(authData, userKey);
+            // return authentication processing result
+            log.debug("[Finish handling assertion]");
+            return createVerifyCredentialResult(authData, userKey);
+        } finally {
+            sessionService.revokeSession(sessionId);
+        }
     }
 
     protected void checkCredentialId(ServerAuthPublicKeyCredential serverPublicKeyCredential, Session session) {

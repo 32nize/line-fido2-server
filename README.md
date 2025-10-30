@@ -177,24 +177,42 @@ We are also providing Client SDK for Android/iOS applications. Please see below.
 
 ### checkOrigin Configuration
 
-The `checkOrigin` method validates the origin of requests from LINE's Android and iOS applications. It ensures security
-by checking that the request's origin matches a pre-configured list of allowed origins.
+The `checkOrigin` method validates the origin of requests. It supports both:
+
+- App facet origins for LINE Android/iOS client SDKs (e.g., `android:...`, `ios:...`).
+- Web origins for passkeys or browser-based WebAuthn (e.g., `https://example.com`).
 
 How to Configure
-To use the `checkOrigin` method, set up the allowed origins in the `application.yml` file. Here is an example
-configuration:
+Define allowed origins in the `application.yml` file. When web origins (`https://` or `http://`) are listed, they are
+treated as an allowlist for web-origin verification (multi-origin supported). If no web origins are configured, the
+server falls back to strict equality between the request-provided origin and the `clientDataJSON.origin`.
 
 ```yaml
 app:
   origins:
     - android:aaa-bbb
     - ios:aaa-bbb
+    # Optional: add one or more web origins to enforce an allowlist for web/passkey flows
+    - https://example.com
+    - https://staging.example.com
 ```
 
 **Note:** Replace `aaa-bbb` with the appropriate values for your application.
 
-**Important:** This configuration is optional and only necessary when integrating with LINE WebAuthn for Android and iOS
-applications.
+**Important:**
+
+- Facet origins (`android:`, `ios:`) apply to native app flows using LINE’s client SDKs.
+    - https://github.com/line/webauthn-swift
+    - https://github.com/line/webauthn-kotlin
+- Web origins (`https://`, `http://`) apply to browser/passkey flows across platforms (iOS, Android, Windows, macOS).
+- If no web origins are configured, verification requires the request origin to exactly match `clientDataJSON.origin`.
+- Android native (FIDO2 API/Credential Manager): `clientDataJSON.origin` starts with `android:...` (app facet). See "
+  Verify origin" in Android Credential Manager
+  docs: https://developer.android.com/identity/sign-in/credential-manager#verify-origin
+- iOS native (AuthenticationServices, passkeys): `clientDataJSON.origin` is an `https` web origin (no `ios:` prefix),
+  e.g., `https://example.com`. For iOS/macOS passkeys, configure a web-origin allowlist.
+- When web origins are configured, the allowlist takes precedence: RP request fields like `VerifyCredential.origin` and
+  `RegisterCredential.origin` do not govern the check; the server validates against the configured web-origin allowlist.
 
 ## References
 
