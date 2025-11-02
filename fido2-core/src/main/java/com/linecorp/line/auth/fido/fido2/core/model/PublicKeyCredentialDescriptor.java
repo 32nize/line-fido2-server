@@ -14,24 +14,20 @@
  * under the License.
  */
 
-pluginManagement {
-    plugins {
-        id 'org.springframework.boot' version '2.7.12'
-        id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-        id 'org.asciidoctor.jvm.convert' version '3.3.2'
+package com.linecorp.line.auth.fido.fido2.core.model;
+
+import java.util.List;
+import lombok.Data;
+
+@Data
+public class PublicKeyCredentialDescriptor {
+    private PublicKeyCredentialType type;
+    private byte[] id;
+    private List<String> transports;
+
+    public PublicKeyCredentialDescriptor(PublicKeyCredentialType type, byte[] id, List<String> transports) {
+        this.type = type;
+        this.id = id;
+        this.transports = transports;
     }
 }
-
-rootProject.name = 'fido2'
-
-include 'server'
-include 'fido2-core'
-include 'fido2-webauthn'
-include 'rpserver'
-include 'common'
-include ':demo'
-project(":demo").projectDir = new File('./fido2-demo/demo')
-
-include ':base'
-project(":base").projectDir = new File('./fido2-demo/base')
-

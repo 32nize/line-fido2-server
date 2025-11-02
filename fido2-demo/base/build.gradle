@@ -27,8 +27,6 @@ dependencies {
     api project(':fido2-core')
     api project(':common')
 
-    compileOnly 'org.projectlombok:lombok:1.18.28'
-    annotationProcessor 'org.projectlombok:lombok:1.18.28'
 
     //bouncy castle
     implementation('org.bouncycastle:bcprov-jdk15on:1.60')
